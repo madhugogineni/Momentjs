@@ -160,8 +160,10 @@
       for (var i = 0; i < finalValues.length; i++) {
         displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues[i]);
       }
+      
       var finalStringArray = replaceBrackets(displayOptions);
       displayOptions = finalStringArray.join(" ");
+
       for (var i = finalValues.length; i < (finalValues.length + finalValues1.length); i++) {
         displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues1[i - finalValues.length]);
       }
