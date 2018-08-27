@@ -153,14 +153,14 @@
       var finalValues = ["+00" + currentYear, "0" + currentYear, currentYear, currentYear.toString().substr(-2), currentYear, quaterValue(date.getMonth()), monthNames[date.getMonth()], monthNames[date.getMonth()].substr(0, 3), configureMonth(date.getMonth()), date.getMonth(), date.getDate(), configureDo(date.getDate()), date.getDate(), date.getTime() / 1000, date.getTime(), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), dayNames[date.getDay()], dayNames[date.getDay()].substr(0, 3), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), date.getDay(), date.getHours(), date.getHours(), configureHoursFormat(date.getHours()), configureHours(date.getHours()), date.getHours(), date.getHours(), formatAMPM(date, "A"), formatAMPM(date, "a"), configureMinutes(date, "mm"), configureMinutes(date, "m"), configureSeconds(date, "ss"), configureSeconds(date, "s"), date.getMilliseconds(), "", ""];
       var finalValues1 = [configureLTS(date), configureLT(date),configurellll(date) ,configureLLLL(date) , configurelll(date), configureLLL(date), configurell(date), configureLL(date), configurel(date), configureL(date)];
       configureBracketValues(displayOptions);
-
+ 
       for (var i = 0; i < actualValues.length; i++) {
         displayOptions = displayOptions.replace(new RegExp(actualValues[i], 'g'), tempValues[i]);
       }
       for (var i = 0; i < finalValues.length; i++) {
         displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues[i]);
       }
-      
+
       var finalStringArray = replaceBrackets(displayOptions);
       displayOptions = finalStringArray.join(" ");
 
