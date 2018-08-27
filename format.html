@@ -1,0 +1,180 @@
+<html>
+
+<head>
+  <title>Moment Js Format</title>
+  <script>
+    var indicesArray = [];
+    var bracketValuesArray = [];
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var dayNames = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    function moment(timeInMilliSeconds, pattern) {
+      this.timeInMilliSeconds = timeInMilliSeconds;
+      this.pattern = pattern;
+      if (!(this instanceof moment)) {
+        return new moment();
+      }
+    }
+    function configureBracketValues(displayOptions) {
+      bracketValuesArray = [];
+      indicesArray = [];
+      var completeStringArray = displayOptions.split(" ");
+      for (var i = 0; i < completeStringArray.length; i++) {
+        if (completeStringArray[i].charAt(0) == '[' && completeStringArray[i].charAt(completeStringArray[i].length - 1) == ']') {
+          bracketValuesArray.push(completeStringArray[i]);
+          indicesArray.push(i);
+        }
+      }
+      if (bracketValuesArray.length > 0) {
+        for (var i = 0; i < bracketValuesArray.length; i++) {
+          var myRegexp = /^\[(.*?)\]$/;
+          var match = myRegexp.exec(bracketValuesArray[i]);
+          bracketValuesArray[i] = match[1];
+        }
+      }
+    }
+    function replaceBrackets(displayOptions) {
+      var completeStringArray = displayOptions.split(" ");
+      for (var i = 0; i < bracketValuesArray.length; i++) {
+        completeStringArray[indicesArray[i]] = bracketValuesArray[i];
+      }
+      return completeStringArray;
+    }
+    function quaterValue(monthNumber) {
+      if (monthNumber <= 3)
+        return 1;
+      else if (monthNumber > 3 && monthNumber <= 6)
+        return 2;
+      else if (monthNumber > 6 && monthNumber <= 9)
+        return 3;
+      else
+        return 4;
+    }
+    function configureMonth(dateNum) {
+      dateNum = dateNum + 1;
+      if (dateNum < 9)
+        return "0" + dateNum;
+      else
+        return dateNum;
+    }
+    function weekOfTheYear(date) {
+      var onejan = new Date(date.getFullYear(), 0, 1);
+      return Math.ceil((((new Date(date.getFullYear(), date.getMonth(), date.getDate()) - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+    }
+    function configureDate(dateNum) {
+      if (dateNum < 9) {
+        return "0" + dateNum;
+      }
+      else {
+        return dateNum;
+      }
+    }
+    function configureDo(dateNum) {
+      var remainder = Math.floor(dateNum % 10);
+      var result = "";
+      if (remainder == 1)
+        result = result + dateNum.toString() + "st";
+      else if (remainder == 2)
+        result = result + dateNum.toString() + "nd";
+      else if (remainder == 3)
+        result = result + dateNum.toString() + "rd";
+      else
+        result = result + dateNum.toString() + "th";
+      return result;
+    }
+    function formatAMPM(date, type) {
+      var hour = date.getHours();
+      var ampm = hour >= 12 ? "pm" : "am";
+      if (type == "A")
+        ampm = ampm.toUpperCase();
+      return ampm;
+    }
+    function configureHours(hourNum) {
+      if (hourNum > 12)
+        return hourNum - 12;
+      else
+        return hourNum;
+    }
+    function configureHoursFormat(hourNum) {
+      var hour = configureHours(hourNum);
+      if (hour < 10)
+        return "0" + hour;
+      else
+        return hour;
+    }
+    function configureMinutes(date, type) {
+      var minutes = date.getMinutes();
+      if (type == "mm")
+        if (minutes < 10)
+          minutes = "0" + minutes;
+      return minutes;
+    }
+    function configureSeconds(date, type) {
+      var seconds = date.getSeconds();
+      if (type == "ss")
+        if (seconds < 10)
+          seconds = "0" + seconds;
+      return seconds;
+    }
+    function configureLTS(date) {
+      return configureHours(date.getHours()) + ":" + configureMinutes(date, "mm") + ":" + date.getSeconds() + " " + formatAMPM(date, "A");
+    }
+    function configureLT(date) {
+      return configureHours(date.getHours()) + ":" + configureMinutes(date, "mm") + " " + formatAMPM(date, "A");
+    }
+    function configureL(date) {
+      return configureMonth(date.getMonth()) + "/" + configureDate(date.getDate()) + "/" + date.getFullYear();
+    }
+    function configurel(date) {
+      return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+    }
+    function configureLL(date) {
+      return monthNames[date.getMonth()] + " " + configureDate(date.getDate()) + ", " + date.getFullYear();
+    }
+    function configurell(date) {
+      return monthNames[date.getMonth()].substr(0, 3) + " " + configureDate(date.getDate()) + ", " + date.getFullYear();
+    }
+    function configureLLL(date) {
+      return monthNames[date.getMonth()] + " " + configureDate(date.getDate()) + ", " + date.getFullYear() + " " + configureHours(date.getHours()) + ":" + date.getMinutes() + " " + formatAMPM(date, "A");
+    }
+    function configurelll(date) {
+      return monthNames[date.getMonth()].substr(0, 3) + " " + configureDate(date.getDate()) + ", " + date.getFullYear() + " " + configureHours(date.getHours()) + ":" + date.getMinutes() + " " + formatAMPM(date, "A");
+    }
+    function configureLLLL(date) {
+      return dayNames[date.getDay()] + ", "+configureLLL(date);
+    }
+    function configurellll(date) {
+      return dayNames[date.getDay()].substr(0,3) + ", "+configurelll(date);
+    }
+    moment.prototype.format = function (displayOptions) {
+      var date = new Date();
+      var currentYear = date.getFullYear();
+      var actualValues = ["YYYYYY", "YYYYY", "YYYY", "YY", "Y", "Q", "MMMM", "MMM", "MM", "M", "DD", "Do", "D", "X", "x", "gggg", "gg", "ww", "w", "dddd", "ddd", "GGGG", "GG", "WW", "W", "E", "HH", "H", "hh", "h", "kk", "k", "A", "a", "mm", "m", "ss", "s", "SSS", "ZZ", "Z", "LTS", "LT", "llll", "LLLL", "lll", "LLL", "ll", "LL", "l", "L"];
+      var tempValues = ["bb/", "bc/", "bf/", "bj/", "bp/", "bq/", "pb/", "cb/", "pc/", "bv/", "cc/", "cf/", "cc/", "cj/", "cp/", "cq/", "cv/", "fb/", "fb/", "fc/", "pf/", "ff/", "fj/", "fp/", "fp/", "fq/", "fv/", "fv/", "jb/", "pj/", "jc/", "jc/", "jf/", "pp/", "jj/", "pq/", "jp/", "pv/", "jq/", "jv/", "jv/", "qc/", "qb/", "qf/", "qj/", "qp/", "qq/", "qv/", "vb/", "vc/", "vf/"];
+      var finalValues = ["+00" + currentYear, "0" + currentYear, currentYear, currentYear.toString().substr(-2), currentYear, quaterValue(date.getMonth()), monthNames[date.getMonth()], monthNames[date.getMonth()].substr(0, 3), configureMonth(date.getMonth()), date.getMonth(), date.getDate(), configureDo(date.getDate()), date.getDate(), date.getTime() / 1000, date.getTime(), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), dayNames[date.getDay()], dayNames[date.getDay()].substr(0, 3), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), date.getDay(), date.getHours(), date.getHours(), configureHoursFormat(date.getHours()), configureHours(date.getHours()), date.getHours(), date.getHours(), formatAMPM(date, "A"), formatAMPM(date, "a"), configureMinutes(date, "mm"), configureMinutes(date, "m"), configureSeconds(date, "ss"), configureSeconds(date, "s"), date.getMilliseconds(), "", ""];
+      var finalValues1 = [configureLTS(date), configureLT(date),configurellll(date) ,configureLLLL(date) , configurelll(date), configureLLL(date), configurell(date), configureLL(date), configurel(date), configureL(date)];
+      configureBracketValues(displayOptions);
+
+      for (var i = 0; i < actualValues.length; i++) {
+        displayOptions = displayOptions.replace(new RegExp(actualValues[i], 'g'), tempValues[i]);
+      }
+      for (var i = 0; i < finalValues.length; i++) {
+        displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues[i]);
+      }
+      var finalStringArray = replaceBrackets(displayOptions);
+      displayOptions = finalStringArray.join(" ");
+      for (var i = finalValues.length; i < (finalValues.length + finalValues1.length); i++) {
+        displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues1[i - finalValues.length]);
+      }
+      console.log(displayOptions);
+    }
+    moment.prototype.locale = function () {
+      console.log(navigator.language.substr(0, 2));
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Hello World</h1>
+</body>
+
+</html>

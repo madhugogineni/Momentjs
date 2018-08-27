@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Moment js</title>
+    <script>
+      function replaceString(initialString)
+      {
+        var partsOfString = initialString.split(" ");
+        var bracketArray = [];
+        var indexArray = [];
+        console.log(partsOfString);
+
+        for(var i = 0;i < partsOfString.length;i++)
+        {
+          if(partsOfString[i].charAt(0) == '[' && partsOfString[i].charAt(partsOfString[i].length-1) == ']')
+          {
+            bracketArray.push(partsOfString[i]);
+            indexArray.push(i);
+            console.log(i);
+          }
+        }
+        console.log("bracketArray = " + bracketArray);
+        for(var i = 0;i < bracketArray.length;i++)
+        {
+          var myRegexp = /^\[(.*?)\]$/;
+          var match = myRegexp.exec(bracketArray[i]);
+          bracketArray[i] = match[1];
+        }
+        console.log(bracketArray);
+        console.log(indexArray);
+      }
+    </script>
+  </head>
+  <body>
+    Hello World
+  </body>
+</html>
