@@ -1,12 +1,12 @@
 <html>
-<!-- changed file-->
+
 <head>
   <title>Moment Js Format</title>
   <script>
     var indicesArray = [];
     var bracketValuesArray = [];
     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var dayNames = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     function moment(timeInMilliSeconds, pattern) {
       this.timeInMilliSeconds = timeInMilliSeconds;
       this.pattern = pattern;
@@ -141,10 +141,10 @@
       return monthNames[date.getMonth()].substr(0, 3) + " " + configureDate(date.getDate()) + ", " + date.getFullYear() + " " + configureHours(date.getHours()) + ":" + date.getMinutes() + " " + formatAMPM(date, "A");
     }
     function configureLLLL(date) {
-      return dayNames[date.getDay()] + ", "+configureLLL(date);
+      return dayNames[date.getDay()] + ", " + configureLLL(date);
     }
     function configurellll(date) {
-      return dayNames[date.getDay()].substr(0,3) + ", "+configurelll(date);
+      return dayNames[date.getDay()].substr(0, 3) + ", " + configurelll(date);
     }
     moment.prototype.format = function (displayOptions) {
       var date = new Date();
@@ -152,9 +152,9 @@
       var actualValues = ["YYYYYY", "YYYYY", "YYYY", "YY", "Y", "Q", "MMMM", "MMM", "MM", "M", "DD", "Do", "D", "X", "x", "gggg", "gg", "ww", "w", "dddd", "ddd", "GGGG", "GG", "WW", "W", "E", "HH", "H", "hh", "h", "kk", "k", "A", "a", "mm", "m", "ss", "s", "SSS", "ZZ", "Z", "LTS", "LT", "llll", "LLLL", "lll", "LLL", "ll", "LL", "l", "L"];
       var tempValues = ["bb/", "bc/", "bf/", "bj/", "bp/", "bq/", "pb/", "cb/", "pc/", "bv/", "cc/", "cf/", "cc/", "cj/", "cp/", "cq/", "cv/", "fb/", "fb/", "fc/", "pf/", "ff/", "fj/", "fp/", "fp/", "fq/", "fv/", "fv/", "jb/", "pj/", "jc/", "jc/", "jf/", "pp/", "jj/", "pq/", "jp/", "pv/", "jq/", "jv/", "jv/", "qc/", "qb/", "qf/", "qj/", "qp/", "qq/", "qv/", "vb/", "vc/", "vf/"];
       var finalValues = ["+00" + currentYear, "0" + currentYear, currentYear, currentYear.toString().substr(-2), currentYear, quaterValue(date.getMonth()), monthNames[date.getMonth()], monthNames[date.getMonth()].substr(0, 3), configureMonth(date.getMonth()), date.getMonth(), date.getDate(), configureDo(date.getDate()), date.getDate(), date.getTime() / 1000, date.getTime(), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), dayNames[date.getDay()], dayNames[date.getDay()].substr(0, 3), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), date.getDay(), date.getHours(), date.getHours(), configureHoursFormat(date.getHours()), configureHours(date.getHours()), date.getHours(), date.getHours(), formatAMPM(date, "A"), formatAMPM(date, "a"), configureMinutes(date, "mm"), configureMinutes(date, "m"), configureSeconds(date, "ss"), configureSeconds(date, "s"), date.getMilliseconds(), "", ""];
-      var finalValues1 = [configureLTS(date), configureLT(date),configurellll(date) ,configureLLLL(date) , configurelll(date), configureLLL(date), configurell(date), configureLL(date), configurel(date), configureL(date)];
+      var finalValues1 = [configureLTS(date), configureLT(date), configurellll(date), configureLLLL(date), configurelll(date), configureLLL(date), configurell(date), configureLL(date), configurel(date), configureL(date)];
       configureBracketValues(displayOptions);
- 
+
       for (var i = 0; i < actualValues.length; i++) {
         displayOptions = displayOptions.replace(new RegExp(actualValues[i], 'g'), tempValues[i]);
       }
@@ -169,9 +169,14 @@
         displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues1[i - finalValues.length]);
       }
       console.log(displayOptions);
-    } 
+    }
     moment.prototype.locale = function () {
       console.log(navigator.language.substr(0, 2));
+    }
+    moment.prototype.startOf = function (option) {
+      var d = new Date();
+      d.setTime(option);
+      console.log(d);
     }
   </script>
 </head>
