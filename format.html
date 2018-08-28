@@ -3,15 +3,22 @@
 <head>
   <title>Moment Js Format</title>
   <script>
+    var date = new Date();
     var indicesArray = [];
     var bracketValuesArray = [];
     var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     function moment(timeInMilliSeconds, pattern) {
-      this.timeInMilliSeconds = timeInMilliSeconds;
-      this.pattern = pattern;
+      this.timeInMilliSeconds = timeInMilliSeconds || null;
+      this.pattern = pattern || null;
+      this.start = null;
+      this.end = null;
+      this.addDays = null;
+      this.addOption = null;
+      this.subtractDays = null;
+      this.subtractOption = null;
       if (!(this instanceof moment)) {
-        return new moment();
+        return new moment(timeInMilliSeconds, pattern);
       }
     }
     function configureBracketValues(displayOptions) {
@@ -51,7 +58,7 @@
     }
     function configureMonth(dateNum) {
       dateNum = dateNum + 1;
-      if (dateNum < 9)
+      if (dateNum <= 9)
         return "0" + dateNum;
       else
         return dateNum;
@@ -132,51 +139,159 @@
       return monthNames[date.getMonth()] + " " + configureDate(date.getDate()) + ", " + date.getFullYear();
     }
     function configurell(date) {
-      return monthNames[date.getMonth()].substr(0, 3) + " " + configureDate(date.getDate()) + ", " + date.getFullYear();
+      return monthNames[date.getMonth()].substring(0, 3) + " " + configureDate(date.getDate()) + ", " + date.getFullYear();
     }
     function configureLLL(date) {
       return monthNames[date.getMonth()] + " " + configureDate(date.getDate()) + ", " + date.getFullYear() + " " + configureHours(date.getHours()) + ":" + date.getMinutes() + " " + formatAMPM(date, "A");
     }
     function configurelll(date) {
-      return monthNames[date.getMonth()].substr(0, 3) + " " + configureDate(date.getDate()) + ", " + date.getFullYear() + " " + configureHours(date.getHours()) + ":" + date.getMinutes() + " " + formatAMPM(date, "A");
+      return monthNames[date.getMonth()].substring(0, 3) + " " + configureDate(date.getDate()) + ", " + date.getFullYear() + " " + configureHours(date.getHours()) + ":" + date.getMinutes() + " " + formatAMPM(date, "A");
     }
     function configureLLLL(date) {
       return dayNames[date.getDay()] + ", " + configureLLL(date);
     }
     function configurellll(date) {
-      return dayNames[date.getDay()].substr(0, 3) + ", " + configurelll(date);
+      return dayNames[date.getDay()].substring(0, 3) + ", " + configurelll(date);
     }
+
     moment.prototype.format = function (displayOptions) {
-      var date = new Date();
-      var currentYear = date.getFullYear();
-      var actualValues = ["YYYYYY", "YYYYY", "YYYY", "YY", "Y", "Q", "MMMM", "MMM", "MM", "M", "DD", "Do", "D", "X", "x", "gggg", "gg", "ww", "w", "dddd", "ddd", "GGGG", "GG", "WW", "W", "E", "HH", "H", "hh", "h", "kk", "k", "A", "a", "mm", "m", "ss", "s", "SSS", "ZZ", "Z", "LTS", "LT", "llll", "LLLL", "lll", "LLL", "ll", "LL", "l", "L"];
-      var tempValues = ["bb/", "bc/", "bf/", "bj/", "bp/", "bq/", "pb/", "cb/", "pc/", "bv/", "cc/", "cf/", "cc/", "cj/", "cp/", "cq/", "cv/", "fb/", "fb/", "fc/", "pf/", "ff/", "fj/", "fp/", "fp/", "fq/", "fv/", "fv/", "jb/", "pj/", "jc/", "jc/", "jf/", "pp/", "jj/", "pq/", "jp/", "pv/", "jq/", "jv/", "jv/", "qc/", "qb/", "qf/", "qj/", "qp/", "qq/", "qv/", "vb/", "vc/", "vf/"];
-      var finalValues = ["+00" + currentYear, "0" + currentYear, currentYear, currentYear.toString().substr(-2), currentYear, quaterValue(date.getMonth()), monthNames[date.getMonth()], monthNames[date.getMonth()].substr(0, 3), configureMonth(date.getMonth()), date.getMonth(), date.getDate(), configureDo(date.getDate()), date.getDate(), date.getTime() / 1000, date.getTime(), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), dayNames[date.getDay()], dayNames[date.getDay()].substr(0, 3), currentYear, currentYear.toString().substr(-2), weekOfTheYear(date), weekOfTheYear(date), date.getDay(), date.getHours(), date.getHours(), configureHoursFormat(date.getHours()), configureHours(date.getHours()), date.getHours(), date.getHours(), formatAMPM(date, "A"), formatAMPM(date, "a"), configureMinutes(date, "mm"), configureMinutes(date, "m"), configureSeconds(date, "ss"), configureSeconds(date, "s"), date.getMilliseconds(), "", ""];
-      var finalValues1 = [configureLTS(date), configureLT(date), configurellll(date), configureLLLL(date), configurelll(date), configureLLL(date), configurell(date), configureLL(date), configurel(date), configureL(date)];
-      configureBracketValues(displayOptions);
+      if (displayOptions != null) {
+        var currentYear = date.getFullYear();
+        var actualValues = ["YYYYYY", "YYYYY", "YYYY", "YY", "Y", "Q", "MMMM", "MMM", "MM", "M", "DD", "Do", "D", "X", "x", "gggg", "gg", "ww", "w", "dddd", "ddd", "GGGG", "GG", "WW", "W", "E", "HH", "H", "hh", "h", "kk", "k", "A", "a", "mm", "m", "ss", "s", "SSS", "ZZ", "Z", "LTS", "LT", "llll", "LLLL", "lll", "LLL", "ll", "LL", "l", "L"];
+        var tempValues = ["bb/", "bc/", "bf/", "bj/", "bp/", "bq/", "pb/", "cb/", "pc/", "bv/", "cc/", "cf/", "cc/", "cj/", "cp/", "cq/", "cv/", "fb/", "fb/", "fc/", "pf/", "ff/", "fj/", "fp/", "fp/", "fq/", "fv/", "fv/", "jb/", "pj/", "jc/", "jc/", "jf/", "pp/", "jj/", "pq/", "jp/", "pv/", "jq/", "jv/", "jv/", "qc/", "qb/", "qf/", "qj/", "qp/", "qq/", "qv/", "vb/", "vc/", "vf/"];
+        var finalValues = ["+00" + currentYear, "0" + currentYear, currentYear, currentYear.toString().substring(-2), currentYear, quaterValue(date.getMonth()), monthNames[date.getMonth()], monthNames[date.getMonth()].substring(0, 3), configureMonth(date.getMonth()), date.getMonth(), date.getDate(), configureDo(date.getDate()), date.getDate(), date.getTime() / 1000, date.getTime(), currentYear, currentYear.toString().substring(-2), weekOfTheYear(date), weekOfTheYear(date), dayNames[date.getDay()], dayNames[date.getDay()].substring(0, 3), currentYear, currentYear.toString().substring(-2), weekOfTheYear(date), weekOfTheYear(date), date.getDay(), date.getHours(), date.getHours(), configureHoursFormat(date.getHours()), configureHours(date.getHours()), date.getHours(), date.getHours(), formatAMPM(date, "A"), formatAMPM(date, "a"), configureMinutes(date, "mm"), configureMinutes(date, "m"), configureSeconds(date, "ss"), configureSeconds(date, "s"), date.getMilliseconds(), "", ""];
+        var finalValues1 = [configureLTS(date), configureLT(date), configurellll(date), configureLLLL(date), configurelll(date), configureLLL(date), configurell(date), configureLL(date), configurel(date), configureL(date)];
+        configureBracketValues(displayOptions);
 
-      for (var i = 0; i < actualValues.length; i++) {
-        displayOptions = displayOptions.replace(new RegExp(actualValues[i], 'g'), tempValues[i]);
-      }
-      for (var i = 0; i < finalValues.length; i++) {
-        displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues[i]);
-      }
+        for (var i = 0; i < actualValues.length; i++) {
+          displayOptions = displayOptions.replace(new RegExp(actualValues[i], 'g'), tempValues[i]);
+        }
+        for (var i = 0; i < finalValues.length; i++) {
+          displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues[i]);
+        }
 
-      var finalStringArray = replaceBrackets(displayOptions);
-      displayOptions = finalStringArray.join(" ");
+        var finalStringArray = replaceBrackets(displayOptions);
+        displayOptions = finalStringArray.join(" ");
 
-      for (var i = finalValues.length; i < (finalValues.length + finalValues1.length); i++) {
-        displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues1[i - finalValues.length]);
+        for (var i = finalValues.length; i < (finalValues.length + finalValues1.length); i++) {
+          displayOptions = displayOptions.replace(new RegExp(tempValues[i], 'g'), finalValues1[i - finalValues.length]);
+        }
+        console.log(displayOptions);
       }
-      console.log(displayOptions);
+      else {
+        console.log(date.getFullYear() + "-" + configureMonth(date.getMonth()) + "-" + configureDate(date.getDate()) + "T" + date.getHours() + ":" + configureMinutes(date, "mm") + ":" + configureSeconds(date, "ss") + "+05:30");//"2018-08-28T15:05:05+05:30"
+      }
     }
+
     moment.prototype.locale = function () {
-      console.log(navigator.language.substr(0, 2));
+      console.log(navigator.language.substring(0, 2));
     }
+
     moment.prototype.startOf = function (option) {
-      var d = new Date();
-      d.setTime(option);
-      console.log(d);
+      moment.start = option;
+      return moment();
+    }
+
+    moment.prototype.endOf = function (option) {
+      moment.end = option;
+      return moment();
+    }
+
+    moment.prototype.fromNow = function () {
+
+      if (this.timeInMilliSeconds != null) {
+        var tempMilliSeconds = this.timeInMilliSeconds;
+        var tempPattern = this.pattern;
+        var year = tempMilliSeconds.toString().substring(0, 4);
+        var month = tempMilliSeconds.toString().substring(4, 6);
+        var day = tempMilliSeconds.toString().substring(6, 8);
+        var tempDate = new Date();
+        tempDate.setFullYear(year);
+        tempDate.setMonth(month);
+        tempDate.setDate(day);
+        var givenTimeInMilliSeconds = tempDate.getTime();
+        var presentTimeInMilliSeconds = date.getTime();
+        if (presentTimeInMilliSeconds > givenTimeInMilliSeconds) {
+          differenceInMilliSeconds = presentTimeInMilliSeconds - givenTimeInMilliSeconds;
+          differenceInDays = differenceInMilliSeconds / (1000 * 60 * 60 * 24);
+          differenceInYears = (differenceInDays / 365);
+          differenceInYears = Math.round(differenceInYears);
+          console.log(differenceInYears + " years ago");
+        }
+      }
+      else if (moment.start != null) {
+        if (moment.start == "hour") {
+          console.log(date.getMinutes() + " minutes ago");
+        }
+        else if (moment.start == "day") {
+          console.log(date.getHours() + " hours ago");
+        }
+        moment.start = null;
+      }
+      else if (moment.end != null) {
+        if (moment.end == "hour") {
+          console.log("in " + (60 - date.getMinutes()) + " minutes");
+        }
+        else if (moment.end == "day") {
+          console.log("in " + (24 - date.getHours()) + " hours");
+        }
+        moment.end = null;
+      }
+    }
+    moment.prototype.add = function (numOfDays, option) {
+      moment.addDays = numOfDays;
+      moment.addOption = option;
+      return moment();
+    }
+    moment.prototype.subtract = function (numOfDays, option) {
+      moment.subtractDays = numOfDays;
+      moment.subtractOption = option;
+      return moment();
+    }
+    moment.prototype.calendar = function () {
+      if (moment.addDays != null && moment.addOption != null) {
+        if (moment.addOption == "day") {
+          finalDate = date.getDate() + moment.addDays;
+          var tempDate = new Date();
+          tempDate.setDate(finalDate);
+          console.log(tempDate.getDate());
+          if (moment.addDays == 1) {
+            console.log("Tomorrow at " + configureHours(date.getHours()) + ":" + configureMinutes(date, "mm") + " " + formatAMPM(date, "A"));
+          }
+          else if (moment.addDays > 1 && moment.addDays < 7) {
+            console.log(dayNames[tempDate.getDay()] + " at " + configureHours(date.getHours()) + ":" + configureMinutes(date, "mm") + " " + formatAMPM(date, "A"));
+          }
+          else if (moment.addDays >= 7) {
+            console.log(configureDate(tempDate.getDate()) + "/" + configureMonth(tempDate.getMonth()) + "/" + tempDate.getFullYear());
+          }
+        }
+        moment.addDays = null;
+        moment.addOption = null;
+      }
+      else if (moment.subtractDays != null && moment.subtractOption != null) {
+        if (moment.subtractDays != null && moment.subtractOption != null) {
+          if (moment.subtractOption == "day") {
+            finalDate = date.getDate() - moment.subtractDays;
+            var tempDate = new Date();
+            tempDate.setDate(finalDate);
+            console.log(tempDate.getDate());
+            if (moment.subtractDays == 1) {
+              console.log("Yesterday at " + configureHours(date.getHours()) + ":" + configureMinutes(date, "mm") + " " + formatAMPM(date, "A"));
+            }
+            else if (moment.subtractDays > 1 && moment.subtractDays < 7) {
+              console.log("Last " + dayNames[tempDate.getDay()] + " at " + configureHours(date.getHours()) + ":" + configureMinutes(date, "mm") + " " + formatAMPM(date, "A"));
+            }
+            else if (moment.subtractDays >= 7) {
+              console.log(configureDate(tempDate.getDate()) + "/" + configureMonth(tempDate.getMonth()) + "/" + tempDate.getFullYear());
+            }
+          }
+        }
+        moment.subtractDays = null;
+        moment.subtractOption = null;
+      }
+      else {
+        console.log("Today at " + configureHours(date.getHours()) + ":" + configureMinutes(date, "mm") + " " + formatAMPM(date, "A"));
+      }
     }
   </script>
 </head>
