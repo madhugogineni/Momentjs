@@ -157,15 +157,275 @@ var moment = function (arg1, arg2) {
     if (arguments.length == 0) {
         moment._d = new Date();
         //milliseconds function
-        moment.milliseconds = function (param1) {
+        moment.millisecond = function (param1) {
             if (arguments.length == 0) {
-                return "0 arguments means get function";
+                return moment._d.getMilliseconds();
             }
             else if (arguments.length == 1) {
-                return "1 argument means set function";
+                moment._d.setMilliseconds(param1);
+                return moment;
+            }
+        }
+        moment.milliseconds = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getMilliseconds();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setMilliseconds(param1);
+                return moment;
+            }
+        }
+        moment.second = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getSeconds();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setSeconds(param1);
+                return moment;
+            }
+        }
+        moment.seconds = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getSeconds();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setSeconds(param1);
+                return moment;
+            }
+        }
+        moment.minute = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getMinutes();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setMinutes(param1);
+                return moment;
+            }
+        }
+        moment.minutes = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getMinutes();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setMinutes(param1);
+                return moment;
+            }
+        }
+        moment.hour = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getHours();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setHours(param1);
+                return moment;
+            }
+        }
+        moment.hours = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getHours();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setHours(param1);
+                return moment;
+            }
+        }
+        moment.date = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getDate();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setDate(param1);
+                return moment;
+            }
+        }
+        moment.dates = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getDate();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setDate(param1);
+                return moment;
+            }
+        }
+        moment.day = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getDay();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setDate(moment._d.getDate() + param1 - 1);
+                return moment;
+            }
+        }
+        moment.days = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getDay();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setDate(moment._d.getDate() + param1 - 1);
+                return moment;
+            }
+        }
+        moment.weekday = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getDay();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setDate(moment._d.getDate() + param1 - 1);
+                return moment._d.getDay();
+            }
+        }
+        moment.weekdays = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getDay();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setDate(moment._d.getDate() + param1 - 1);
+                return moment._d.getDay();
+            }
+        }
+        moment.dayOfTheYear = function (param1) {
+            if (arguments.length == 0) {
+                var now = new Date();
+                var start = new Date(now.getFullYear(), 0, 0);
+                var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+                var oneDay = 1000 * 60 * 60 * 24;
+                return Math.floor(diff / oneDay);
+            }
+            else if (arguments.length == 1) {
+                var now = new Date();
+                var start = new Date(now.getFullYear(), 0, 0);
+                var diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+                var oneDay = 1000 * 60 * 60 * 24;
+                var presentDay = Math.floor(diff / oneDay);
+                moment._d.setDate(param1 - presentDay + 3);
+                return moment;
+            }
+        }
+        moment.months = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getMonth();
+            }
+            else if (arguments.length == 1) {
+
+                moment._d.setMonth(param1);
+                return moment;
+            }
+        }
+        moment.month = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getMonth();
+            }
+            else if (arguments.length == 1) {
+
+                moment._d.setMonth(param1);
+                return moment;
+            }
+        }
+        moment.years = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getFullYear();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setFullYear(param1);
+                return moment;
+            }
+        }
+        moment.year = function (param1) {
+            if (arguments.length == 0) {
+                return moment._d.getFullYear();
+            }
+            else if (arguments.length == 1) {
+                moment._d.setFullYear(param1);
+                return moment;
             }
         }
 
+        //get function
+
+        moment.get = function (param1) {
+            switch (param1) {
+                case "years": {
+                    return moment._d.getFullYear();
+                    break;
+                }
+                case "months": {
+                    return moment._d.getMonth();
+                    break;
+                }
+                case "dates": {
+                    return moment._d.getDate();
+                }
+                case "hours": {
+                    return moment._d.getHours();
+                    break;
+                }
+                case "minutes": {
+                    return moment._d.getMinutes();
+                    break;
+                }
+                case "seconds": {
+                    return moment._d.getSeconds();
+                    break;
+                }
+                case "milliseconds": {
+                    return moment._d.getMilliseconds();
+                    break;
+                }
+            }
+        }
+        //set function
+
+        moment.set = function (param1, param2) {
+            if (arguments.length == 2) {
+                switch (param1) {
+                    case "years": {
+                        moment._d.setFullYear(param2);
+                        return moment;
+                        break;
+                    }
+                    case "months": {
+                        moment._d.setMonth(param2);
+                        return moment;
+                        break;
+                    }
+                    case "dates": {
+                        moment._d.setDate(param2);
+                        return moment;
+                    }
+                    case "hours": {
+                        moment._d.setHours(param2);
+                        return moment;
+                        break;
+                    }
+                    case "minutes": {
+                        moment._d.setMintues(param2);
+                        return moment;
+                        break;
+                    }
+                    case "seconds": {
+                        moment._d.setSeconds(param2);
+                        return moment;
+                        break;
+                    }
+                    case "milliseconds": {
+                        moment._d.setMilliseconds(param2);
+                        return moment;
+                        break;
+                    }
+                }
+                return moment;
+            }
+            else if (arguments.length == 1) {
+                moment._d.setFullYear(param1.years || moment._d.getFullYear());
+                moment._d.setMonth(param1.months || moment._d.getMonth());
+                moment._d.setDate(param1.date || moment._d.getDate());
+                moment._d.setHours(param1.hours || moment._d.getHours());
+                moment._d.setMinutes(param1.minutes || moment._d.getMinutes());
+                moment._d.setSeconds(param1.seconds || moment._d.getSeconds());
+                moment._d.setMilliseconds(param1.milliseconds || moment._d.getMilliseconds());
+                return moment;
+            }
+        }
         //format function
         moment.format = function (pattern) {
             if (arguments.length == 1) {
@@ -334,7 +594,6 @@ moment.duration = function (arg1, arg2) {
             moment._data.milliseconds = arg1;
             var tempTime = Math.floor(arg1 / 1000);
             console.log("temptime = " + tempTime);
-            moment._milliseconds = arg1;
             console.log("data milliseconds = " + Math.ceil(arg1 % 1000));
             moment._data.milliseconds = Math.ceil((arg1 % 1000) * 1000);
             if (tempTime >= 31536000) {
@@ -420,7 +679,7 @@ moment.duration = function (arg1, arg2) {
                 case "weeks":
                 case "w": {
                     moment._data.days = arg1 * 7;
-                    moment.days = arg1 * 7;
+                    moment._days = arg1 * 7;
                     break;
                 }
                 case "months":
@@ -638,7 +897,9 @@ moment.duration = function (arg1, arg2) {
                 }
             }
         }
-    }//humanize function
+    }//duration.humanize function
+
+
     //duration.milliseconds function
     moment.milliseconds = function () {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) % 1000;
@@ -655,37 +916,37 @@ moment.duration = function (arg1, arg2) {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / 1000;
     }
     moment.minutes = function () {
-        return Math.floor((moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) % (1000 * 60));
+        return Math.floor((moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60));
     }
     moment.asMinutes = function () {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60);
     }
     moment.hours = function () {
-        return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) % (1000 * 60 * 60);
+        return Math.floor((moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60));
     }
     moment.asHours = function () {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60);
     }
     moment.days = function () {
-        return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) % (1000 * 60 * 60 * 24);
+        return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60 * 24);
     }
     moment.asDays = function () {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60 * 24);
     }
     moment.weeks = function () {
-        return Math.floor(((moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) % (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24 * 7));
+        return Math.floor(((moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60 * 24 * 7)) / (1000 * 60 * 60 * 24 * 7));
     }
     moment.asWeeks = function () {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60 * 24 * 7);
     }
     moment.months = function () {
-        return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) % (2592000000);
+        return Math.floor((moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (2592000000));
     }
     moment.asMonths = function () {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (2592000000);
     }
     moment.years = function () {
-        var temp = (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) % (31536000000);
+        var temp = (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (31536000000);
         if (temp < 1) {
             return 0;
         }
@@ -693,6 +954,229 @@ moment.duration = function (arg1, arg2) {
     }
     moment.asYears = function () {
         return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (31536000000);
+    }
+    moment.add = function (param1, param2) {
+        if (arguments.length == 2) {
+            if ((!isNaN(param1)) && ((typeof param2 === 'string') || (param2 instanceof String))) {
+                moment = getValuesForTwoParameters(moment, param1, param2, "add");
+                return moment;
+            }
+        }//if statement arguments length = 0
+        else if (arguments.length == 1) {
+            if (!isNaN(param1)) {
+                moment = getValuesForNumber(moment, param1, "add");
+                return moment;
+            }
+            else if (typeof param1 === 'object' || param1 instanceof Object) {
+                if (typeof param1.add === 'function') {
+                    moment = getValuesForMomentObject(moment, param1, "add");
+                    return moment;
+                }
+                else {
+                    moment = getValuesForObject(moment, param1, "add");
+                    return moment;
+                }
+            }
+        }
+    }
+    moment.subtract = function (param1, param2) {
+        if (arguments.length == 2) {
+            if ((!isNaN(param1)) && ((typeof param2 === 'string') || (param2 instanceof String))) {
+                moment = getValuesForTwoParameters(moment, param1, param2, "subtract");
+                return moment;
+            }
+        }//if statement arguments length = 0
+        else if (arguments.length == 1) {
+            if (!isNaN(param1)) {
+                moment = getValuesForNumber(moment, param1, "subtract");
+                return moment;
+            }
+            else if (typeof param1 === 'object' || param1 instanceof Object) {
+                if (typeof param1.add === 'function') {
+                    moment = getValuesForMomentObject(moment, param1, "subtract");
+                    return moment;
+                }
+                else {
+                    moment = getValuesForObject(moment, param1, "subtract");
+                    return moment;
+                }
+            }
+        }
+    }
+    moment.as = function (param1) {
+        switch (param1) {
+            case "milliseconds":
+            case "ms": {
+                return moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000;
+                break;
+            }
+            case "seconds":
+            case "s": {
+                return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / 1000;
+                break;
+            }
+            case "minutes":
+            case "m": {
+                return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60);
+                break;
+            }
+            case "hours":
+            case "h": {
+                return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60);
+                break;
+            }
+            case "days":
+            case "d": {
+                return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60 * 24);
+                break;
+            }
+            case "weeks":
+            case "w": {
+                return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (1000 * 60 * 60 * 24 * 7);
+                break;
+            }
+            case "months":
+            case "M": {
+                return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (2592000000);
+                break;
+            }
+            case "years":
+            case "y": {
+                return (moment._data.milliseconds + moment._data.seconds * 1000 + moment._data.minutes * 60000 + moment._data.hours * 3600000 + moment._data.days * 86400000 + moment._data.months * 2592000000 + moment._data.years * 31536000000) / (31536000000);
+                break;
+            }
+        }
+    }
+    moment.toJSON = function () {
+        return "P" + moment._data.years + "Y";
+    }
+    return moment;
+}
+function getValuesForObject(moment, param1, operation) {
+    var operator = 1;
+    if (operation == "subtract")
+        operator = -1;
+    moment._data.milliseconds = moment._data.milliseconds + operator * (param1.milliseconds || 0);
+    moment._data.seconds = moment._data.seconds + operator * (param1.seconds || 0);
+    moment._data.minutes = moment._data.minutes + operator * (param1.minutes || 0);
+    moment._data.hours = moment._data.hours + operator * (param1.hours || 0);
+    moment._data.days = moment._data.days + operator * (param1.days || 0);
+    moment._data.days = moment._data.days + operator * (param1.weeks * 7 || 0);
+    moment._data.months = moment._data.months + operator * (param1.months || 0);
+    moment._data.years = moment._data.years + operator * (param1.years || 0);
+    moment._milliseconds = moment._milliseconds + operator * ((param1.milliseconds || 0) + operator * (param1.seconds * 1000 || 0) + operator * (param1.minutes * 60 * 1000 || 0) + operator * (param1.hours * 3600 * 1000 || 0));
+    moment._days = moment._days + operator * ((param1.days || 0) + (param1.weeks * 7 || 0));
+    moment._months = moment._months + operator * ((param1.months || 0) + (param1.years * 12 || 0));
+    return moment;
+}
+function getValuesForMomentObject(moment, param1, operation) {
+    var operator = 1;
+    if (operation == "subtract")
+        operator = -1;
+    moment._data.milliseconds = moment._data.milliseconds + operator * (param1._data.milliseconds || 0);
+    moment._data.seconds = moment._data.seconds + operator * (param1._data.seconds || 0);
+    moment._data.minutes = moment._data.minutes + operator * (param1._data.minutes || 0);
+    moment._data.hours = moment._data.hours + operator * (param1._data.hours || 0);
+    moment._data.days = moment._data.days + operator * (param1._data.days || 0);
+    moment._data.days = moment._data.days + operator * (param1._data.weeks * 7 || 0);
+    moment._data.months = moment._data.months + operator * (param1._data.months || 0);
+    moment._data.years = moment._data.years + operator * (param1._data.years || 0);
+    moment._milliseconds = moment._milliseconds + operator * (param1._milliseconds || 0);
+    moment._days = moment._days + operator * (param1._days || 0)
+    moment._months = moment._months + operator * (param1._months || 0);
+    return moment;
+}
+function getValuesForNumber(moment, param1, operation) {
+    var operator = 1;
+    if (operation == "subtract")
+        operator = -1;
+    //moment._data.milliseconds = moment._data.milliseconds + param1;
+    var tempTime = Math.floor(param1 / 1000);
+    //console.log("temptime = " + tempTime);
+    moment._milliseconds = moment._milliseconds + operator * param1;
+    //console.log("moment._data.milliseconds = " + moment._data.milliseconds);
+    //console.log("ceil function for param1 = " + Math.ceil((param1 % 1000) * 1000));
+    if (param1 >= 1000)
+        moment._data.milliseconds = moment._data.milliseconds + operator * Math.ceil((param1 % 1000) * 1000);
+    else
+        moment._data.milliseconds = moment._data.milliseconds + operator * param1;
+
+    if (tempTime >= 31536000) {
+        moment._data.years = moment._data.years + operator * Math.floor(tempTime / 31536000);
+        tempTime = tempTime % 31536000;
+    }
+    if (tempTime < 31536000 && tempTime >= 2628000) {
+        moment._data.months = moment._data.months + operator * Math.floor(tempTime / 2628000);
+        tempTime = tempTime % 2628000;
+    }
+    if (tempTime < 2628003 && tempTime >= 86400) {
+        moment._data.days = moment._data.days + operator * Math.floor(tempTime / 86400);
+        tempTime = tempTime % 86400;
+    }
+    if (tempTime < 86400 && tempTime >= 3600) {
+        moment._data.hours = moment._data.hours + operator * Math.floor(tempTime / 3600);
+        tempTime = tempTime % 3600;
+    }
+    if (tempTime < 3600 && tempTime >= 60) {
+        moment._data.minutes = moment._data.minutes + operator * Math.floor(tempTime / 60);
+        tempTime = tempTime % 60;
+    }
+    moment._data.seconds = moment._data.seconds + operator * tempTime;
+    return moment;
+}
+function getValuesForTwoParameters(moment, param1, param2, operation) {
+    var operator = 1;
+    if (operation == "subtract")
+        operator = -1;
+    switch (param2) {
+        case "milliseconds":
+        case "ms": {
+            moment._data.milliseconds = moment._data.milliseconds + operator * param1;
+            moment._milliseconds = moment._milliseconds + operator * param1;
+            break;
+        }
+        case "seconds":
+        case "s": {
+            moment._data.seconds = moment._data.seconds + operator * param1;
+            moment._milliseconds = moment._milliseconds + operator * (param1 * 1000);
+            break;
+        }
+        case "minutes":
+        case "m": {
+            moment._data.minutes = moment._data.minutes + operator * param1;
+            moment._milliseconds = moment._milliseconds + operator * (param1 * 1000 * 60);
+            break;
+        }
+        case "hours":
+        case "h": {
+            moment._data.hours = moment._data.hours + operator * param1;
+            moment._milliseconds = moment._milliseconds + operator * (param1 * 1000 * 60 * 60);
+            break;
+        }
+        case "days":
+        case "d": {
+            moment._data.days = moment._data.days + operator * param1;
+            moment._days = moment._days + operator * param1;
+            break;
+        }
+        case "weeks":
+        case "w": {
+            moment._data.days = moment._data.days + operator * (param1 * 7);
+            moment._days = moment._days + operator * (param1 * 7);
+            break;
+        }
+        case "months":
+        case "M": {
+            moment._data.months = moment._data.months + operator * param1;
+            moment._months = moment._months + operator * param1;
+            break;
+        }
+        case "years":
+        case "y": {
+            moment._data.years = moment._data.years + operator * param1;
+            moment._months = moment._months + operator * (param1 * 12);
+            break;
+        }
     }
     return moment;
 }
