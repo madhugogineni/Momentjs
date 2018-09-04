@@ -341,7 +341,6 @@ var moment = function (arg1, arg2) {
         }
 
         //get function
-
         moment.get = function (param1) {
             switch (param1) {
                 case "years": {
@@ -425,6 +424,296 @@ var moment = function (arg1, arg2) {
                 moment._d.setMilliseconds(param1.milliseconds || moment._d.getMilliseconds());
                 return moment;
             }
+        }
+        //add function
+        moment.add = function (arg1, arg2) {
+            var date = new Date();
+            if (arguments.length == 2) {
+                switch (arg2) {
+                    case "milliseconds":
+                    case "ms": {
+                        moment._d.setMilliseconds(date.getMilliseconds() + arg1);
+                        return moment;
+                    }
+                    case "seconds":
+                    case "s": {
+                        moment._d.setSeconds(date.getSeconds() + arg1);
+                        return moment;
+                    }
+                    case "minutes":
+                    case "m": {
+                        moment._d.setMinutes(date.getMinutes() + arg1);
+                        return moment;
+                    }
+                    case "hours":
+                    case "h": {
+                        moment._d.setHours(date.getHours() + arg1);
+                        return moment;
+                    }
+                    case "days":
+                    case "d": {
+                        moment._d.setDate(date.getDate() + arg1);
+                        return moment;
+                    }
+                    case "weeks":
+                    case "w": {
+                        moment._d.setDate(date.getDate() + (arg1 * 7));
+                        return moment;
+                    }
+                    case "months":
+                    case "M": {
+                        moment._d.setMonth(date.getMonth() + arg1);
+                        return moment;
+                    }
+                    case "quarters":
+                    case "Q": {
+                        moment._d.setMonth(date.getMonth() + (arg1 * 3));
+                        return moment;
+                    }
+                    case "years":
+                    case "y": {
+                        moment._d.setFullYear(date.getFullYear() + arg1);
+                    }
+                }
+
+            }
+            else if (arguments.length == 1) {
+                if (typeof arg1 === 'object' || arg1 instanceof Object) {
+                    if (typeof arg1._data === 'object' || arg1._data instanceof Object) {
+                        moment._d.setMilliseconds(date.getMilliseconds() + (arg1._data.milliseconds || 0));
+                        moment._d.setSeconds(date.getSeconds() + (arg1._data.seconds || 0));
+                        moment._d.setMinutes(date.getMinutes() + (arg1._data.minutes || 0));
+                        moment._d.setHours(date.getHours() + (arg1._data.hours || 0));
+                        moment._d.setDate(date.getDate() + (arg1._data.days || 0));
+                        moment._d.setMonth(date.getMonth() + (arg1._data.months || 0));
+                        moment._d.setFullYear(date.getFullYear() + (arg1._data.years || 0));
+                        return moment;
+                    }
+                    else {
+                        moment._d.setMilliseconds(date.getMilliseconds() + (arg1.milliseconds || 0));
+                        moment._d.setSeconds(date.getSeconds() + (arg1.seconds || 0));
+                        moment._d.setMinutes(date.getMinutes() + (arg1.minutes || 0));
+                        moment._d.setHours(date.getHours() + (arg1.hours || 0));
+                        moment._d.setDate(date.getDate() + (arg1.days || 0));
+                        moment._d.setMonth(date.getMonth() + (arg1.months || 0));
+                        moment._d.setFullYear(date.getFullYear() + (arg1.years || 0));
+                        return moment;
+                    }
+                }
+            }
+        }
+        //subtract function
+        moment.subtract = function (arg1, arg2) {
+            var date = new Date();
+            if (arguments.length == 2) {
+                switch (arg2) {
+                    case "milliseconds":
+                    case "ms": {
+                        moment._d.setMilliseconds(date.getMilliseconds() - arg1);
+                        return moment;
+                    }
+                    case "seconds":
+                    case "s": {
+                        moment._d.setSeconds(date.getSeconds() - arg1);
+                        return moment;
+                    }
+                    case "minutes":
+                    case "m": {
+                        moment._d.setMinutes(date.getMinutes() - arg1);
+                        return moment;
+                    }
+                    case "hours":
+                    case "h": {
+                        moment._d.setHours(date.getHours() - arg1);
+                        return moment;
+                    }
+                    case "days":
+                    case "d": {
+                        moment._d.setDate(date.getDate() - arg1);
+                        return moment;
+                    }
+                    case "weeks":
+                    case "w": {
+                        moment._d.setDate(date.getDate() - (arg1 * 7));
+                        return moment;
+                    }
+                    case "months":
+                    case "M": {
+                        moment._d.setMonth(date.getMonth() - arg1);
+                        return moment;
+                    }
+                    case "quarters":
+                    case "Q": {
+                        moment._d.setMonth(date.getMonth() - (arg1 * 3));
+                        return moment;
+                    }
+                    case "years":
+                    case "y": {
+                        moment._d.setFullYear(date.getFullYear() - arg1);
+                    }
+                }
+
+            }
+            else if (arguments.length == 1) {
+                if (typeof arg1 === 'object' || arg1 instanceof Object) {
+                    if (typeof arg1._data === 'object' || arg1._data instanceof Object) {
+                        moment._d.setMilliseconds(date.getMilliseconds() - (arg1._data.milliseconds || 0));
+                        moment._d.setSeconds(date.getSeconds() - (arg1._data.seconds || 0));
+                        moment._d.setMinutes(date.getMinutes() - (arg1._data.minutes || 0));
+                        moment._d.setHours(date.getHours() - (arg1._data.hours || 0));
+                        moment._d.setDate(date.getDate() - (arg1._data.days || 0));
+                        moment._d.setMonth(date.getMonth() - (arg1._data.months || 0));
+                        moment._d.setFullYear(date.getFullYear() - (arg1._data.years || 0));
+                        return moment;
+                    }
+                    else {
+                        moment._d.setMilliseconds(date.getMilliseconds() - (arg1.milliseconds || 0));
+                        moment._d.setSeconds(date.getSeconds() - (arg1.seconds || 0));
+                        moment._d.setMinutes(date.getMinutes() - (arg1.minutes || 0));
+                        moment._d.setHours(date.getHours() - (arg1.hours || 0));
+                        moment._d.setDate(date.getDate() - (arg1.days || 0));
+                        moment._d.setMonth(date.getMonth() - (arg1.months || 0));
+                        moment._d.setFullYear(date.getFullYear() - (arg1.years || 0));
+                        return moment;
+                    }
+                }
+            }
+        }
+        //start of function
+        moment.startOf = function (arg1) {
+            switch (arg1) {
+                case "year": {
+                    moment._d.setMonth(0);
+                    moment._d.setDate(1);
+                    moment._d.setHours(0);
+                    moment._d.setMinutes(0);
+                    moment._d.setSeconds(0);
+                    moment._d.setMilliseconds(0);
+                    return moment;
+                }
+                case "quarter": {
+                    var date = new Date();
+                    moment._d.setMonth(date.getMonth() - (date.getMonth() % 3));
+                    moment._d.setDate(1);
+                    moment._d.setHours(0);
+                    moment._d.setMinutes(0);
+                    moment._d.setSeconds(0);
+                    moment._d.setMilliseconds(0);
+                    return moment;
+                }
+                case "month": {
+                    console.log("Welcome");
+                    moment._d.setDate(1);
+                    moment._d.setHours(0);
+                    moment._d.setMinutes(0);
+                    moment._d.setSeconds(0);
+                    moment._d.setMilliseconds(0);
+                    return moment;
+                }
+                case "week": {
+                    var date = new Date();
+                    moment._d.setDate(date.getDate() - date.getDay());
+                    moment._d.setHours(0);
+                    moment._d.setMinutes(0);
+                    moment._d.setSeconds(0);
+                    moment._d.setMilliseconds(0);
+                    return moment;
+                }
+                case "isoWeek": {
+                    var date = new Date();
+                    moment._d.setDate(date.getDate() - date.getDay() + 1);
+                    moment.startOf("date");
+                }
+                case "day": {
+                    moment.startOf("date");
+                }
+                case "date": {
+                    moment._d.setHours(0);
+                    moment.startOf("hour");
+                }
+                case "hour": {
+                    moment._d.setMinutes(0);
+                    moment.startOf("minute");
+                }
+                case "minute": {
+                    moment._d.setSeconds(0);
+                    moment._d.setMilliseconds(0);
+                    return moment;
+                }
+                case "second": {
+                    moment._d.setMilliseconds(0);
+                    return moment;
+                }
+            }
+        }
+        //endOf function
+        moment.endOf = function (arg1) {
+            switch (arg1) {
+                case "year": {
+                    moment._d.setMonth(12);
+                    moment._d.setDate(0);
+                    moment._d.setHours(23);
+                    moment._d.setMinutes(59);
+                    moment._d.setSeconds(59);
+                    moment._d.setMilliseconds(999);
+                    return moment;
+                }
+                case "quarter": {
+                    var date = new Date();
+                    moment._d.setMonth(date.getMonth() + 3 - (date.getMonth() % 3));
+                    moment._d.setDate(0);
+                    moment._d.setHours(23);
+                    moment._d.setMinutes(59);
+                    moment._d.setSeconds(59);
+                    moment._d.setMilliseconds(999);
+                    return moment;
+                }
+                case "month": {
+                    var date = new Date();
+                    moment._d.setMonth(date.getMonth() + 1);
+                    moment._d.setDate(0);
+                    moment._d.setHours(23);
+                    moment._d.setMinutes(59);
+                    moment._d.setSeconds(59);
+                    moment._d.setMilliseconds(999);
+                    return moment;
+                }
+                case "week": {
+                    var date = new Date();
+                    moment._d.setDate(date.getDate() + 7 - date.getDay() - 1);
+                    moment._d.setHours(23);
+                    moment._d.setMinutes(59);
+                    moment._d.setSeconds(59);
+                    moment._d.setMilliseconds(999);
+                    return moment;
+                }
+                case "isoWeek": {
+                    var date = new Date();
+                    moment._d.setDate(date.getDate() + (7 - date.getDay()));
+                    moment.startOf("date");
+                }
+                case "day": {
+                    moment.startOf("date");
+                }
+                case "date": {
+                    moment._d.setHours(23);
+                    moment.startOf("hour");
+                }
+                case "hour": {
+                    moment._d.setMinutes(59);
+                    moment.startOf("minute");
+                }
+                case "minute": {
+                    moment._d.setSeconds(59);
+                    moment._d.setMilliseconds(999);
+                    return moment;
+                }
+                case "second": {
+                    moment._d.setMilliseconds(999);
+                    return moment;
+                }
+            }
+
         }
         //format function
         moment.format = function (pattern) {
@@ -552,6 +841,40 @@ var moment = function (arg1, arg2) {
                         }
                     }
                 }
+            }
+        }
+
+        //fromNow
+        moment.fromNow = function (arg1) {
+            var date = new Date();
+            var agoString = "", inString = "";
+            if (arg1 == true) {
+                agoString = "ago";
+                inString = "in";
+            }
+            var difference = date.getTime() - moment._d.getTime();
+            var timeDiff = Math.abs(moment._d.getTime() - date.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            var diffYears = Math.floor(diffDays / 365);
+            if (diffYears >= 1) {
+                if (difference > 0) {
+                    return diffYears + " years " + agoString;
+                }
+                else {
+                    return inString + " " + diffYears + " years";
+                }
+            }
+            else if (diffDays < 365 && diffDays >= 30) {
+                var diffMonths = Math.floor(diffDays / 30);
+                if (difference > 0) {
+                    return diffMonths + " months " + agoString;
+                }
+                else {
+                    return inString + " " + diffMonths + " months";
+                }
+            }
+            else if (diffDays < 29) {
+
             }
         }
     }
