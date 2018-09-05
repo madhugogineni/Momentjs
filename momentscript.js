@@ -1,3 +1,8 @@
+var isLocaleSet = false;
+var localDate;
+function setLocale(arg1) {
+    moment.locale(arg1);
+}
 var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 var indicesArray = [];
@@ -102,6 +107,13 @@ function configureHours(_d) {
     else
         return hours;
 }
+function configureHoursFormat(_d) {
+    var hours = _d;
+    if (hours > 12)
+        return hours - 12;
+    else
+        return hours;
+}
 function formatHours(_d) {
     var hours = _d.getHours();
     if (hours < 10)
@@ -121,10 +133,27 @@ function formatSeconds(_d) {
     return seconds;
 }
 function configureLTS(date) {
-    return formatHours(date) + ":" + formatMinutes(date, "mm") + ":" + date.getSeconds() + " " + formatAMPM(date, "A");
+
+    // if (isLocaleSet == true) {
+    //     var options = [{ hour: "2-digit" }, { minute: "2-digit" }, { second: "2-digit" }];
+    //     var result = "";
+    //     result = result + date.toLocaleString(localeDate, options[0]) + ":";
+    //     result = result + date.toLocaleString(localeDate, options[1]);
+    //     return result;
+    // } else {
+    return Number(configureHoursFormat(Number(formatHours(date)))).toLocaleString(localeDate) + ":" + Number(formatMinutes(date, "mm")).toLocaleString(localeDate) + ":" + Number(date.getSeconds()).toLocaleString(localeDate) + " " + formatAMPM(date, "A");
+    //}
 }
 function configureLT(date) {
-    return formatHours(date) + ":" + formatMinutes(date, "mm") + " " + formatAMPM(date, "A");
+    if (isLocaleSet == true) {
+        var options = [{ hour: "2-digit" }, { minute: "2-digit" }, { second: "2-digit" }];
+        var result = "";
+        result = result + date.toLocaleString(localeDate, options[0]) + ":";
+        result = result + date.toLocaleString(localeDate, options[1]);
+        return result;
+    } else {
+        return formatHours(date) + ":" + formatMinutes(date, "mm") + " " + formatAMPM(date, "A");
+    }
 }
 function configureL(date) {
     return formatMonth(date) + "/" + formatDate(date) + "/" + date.getFullYear();
@@ -1374,6 +1403,13 @@ moment.duration = function (arg1, arg2) {
         return "P" + moment._data.years + "Y";
     }
     return moment;
+}
+moment.locale = function (arg1) {
+    if (arguments.length == 1) {
+        isLocaleSet = true;
+        localeDate = arg1;
+        console.log("localDate = " + localeDate + " isLocalSet = " + isLocaleSet);
+    }
 }
 function getValuesForObject(moment, param1, operation) {
     var operator = 1;
