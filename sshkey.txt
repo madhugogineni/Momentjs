@@ -1,1 +1,1 @@
-added ssh key
+added ssh key and added origin1 remote to it.
