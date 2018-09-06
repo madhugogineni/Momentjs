@@ -2,3 +2,4 @@ branch1 is created in github
 origin added in windows and is configured with ssh
 removed the code in ssshkey.txt
 changes done.
+checking if the remote is working
