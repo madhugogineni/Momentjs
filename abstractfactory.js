@@ -54,3 +54,18 @@ function run() {
  
     log.show();
 }
+
+
+function Square() {
+    return "square function";
+}
+function Rectangle() {
+    return "rectangle function";
+}
+function Shape(input) {
+    if(input == "square"){
+        var square = Square();
+    }else {
+        var rectangle = Rectangle();
+    }
+}
